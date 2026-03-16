@@ -48,6 +48,8 @@ java -jar converter.jar -i
 | Caesar Cipher | `--caesar` | Yes | Yes |
 | Hex | `--hex` | Yes | Yes |
 | URL | `--url` | Yes | Yes |
+| Binary | `--binary` | Yes | Yes |
+
 
 ## License
 

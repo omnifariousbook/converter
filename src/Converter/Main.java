@@ -29,8 +29,10 @@ public class Main implements Runnable {
     boolean caesar;
     @Option(names = { "--url" }, description = "Url")
     boolean url;
-    @Option(names = { "--hex" }, description = "Hex")
+    @Option(names = { "--hex" }, description = "Hexadecimal")
     boolean hex;
+    @Option(names = {"--binary"}, description = "Binary")
+    boolean binary;
   }
 
   // take words string
@@ -60,7 +62,7 @@ public class Main implements Runnable {
 
       // if encoding
       if (en_de.equals("1")) {
-        System.out.print("1. ROT13\n2. Base64\n3. Caesar Cipher\n4. Hex Encoding\n5.URL Encoding\n>> ");
+        System.out.print("1. ROT13\n2. Base64\n3. Caesar Cipher\n4. Hex Encoding\n5. URL Encoding\n6. Binary\n>> ");
         String method = input.nextLine();
 
         // if ROT13
@@ -106,7 +108,14 @@ public class Main implements Runnable {
           String result = Url.tourl(str, hex);
           System.out.println(result);
 
-        } else {
+          // Binary Encoding
+        } else if (method.equals("6")) {
+          System.out.print("String: ");
+          String str = input.nextLine();
+          String result = Binary.tobinary(str);
+          System.out.println(result);
+        }
+        else {
           System.out.println("Not exist");
           // exit with status code error
           System.exit(1);
@@ -114,21 +123,22 @@ public class Main implements Runnable {
 
         // if decode
       } else if (en_de.equals("2")) {
-        System.out.print("1. ROT13\n2. Base64\n3. Caesar Cipher\n4. Hex Decoding\n5. URL Encoding\n>> ");
+        System.out.print("1. ROT13\n2. Base64\n3. Caesar Cipher\n4. Hex Decoding\n5. URL Encoding\n6. Binary\n>> ");
         String method = input.nextLine();
 
         // if ROT13
         if (method.equals("1")) {
           char[] alpha = Alpha.gen_alpha('a', 'z');
           char[] rot13_alpha = Rot13.gen_rot13_alpha('a', 'z');
-          System.out.print("String: ");
+          System.out.print("ROT13: ");
           String str = input.nextLine();
           String result = Rot13.fromrot13(str, alpha, rot13_alpha);
           System.out.println(result);
-
+        
+        // if Base64
         } else if (method.equals("2")) {
           String[] base64_alpha = Base64.gen_base64_alpha();
-          System.out.print("String: ");
+          System.out.print("Base64: ");
           String str = input.nextLine();
           String result = Base64.frombase64(str, base64_alpha);
           System.out.println(result);
@@ -137,22 +147,22 @@ public class Main implements Runnable {
         // if Caesar Cipher
         else if (method.equals("3")) {
           char[] alpha = Alpha.gen_alpha('a', 'z');
-          System.out.print("String: ");
+          System.out.print("Caesar: ");
           String str = input.nextLine();
           System.out.print("Shift: ");
           int shift = input.nextInt();
           String result = CaesarCipher.fromcaesar(str, shift, alpha);
           System.out.println(result);
 
-          // Hex Decoding
+        // Hex Decoding
         } else if (method.equals("4")) {
-          System.out.print("String: ");
+          System.out.print("Hexadecimal: ");
           String str = input.nextLine();
           String[] hex = Hex.gen_hex();
           String result = Hex.fromhex(str, hex);
           System.out.println(result);
 
-          // Url Decoding
+        // Url Decoding
         } else if (method.equals("5")) {
           System.out.print("String: ");
           String str = input.nextLine();
@@ -160,7 +170,15 @@ public class Main implements Runnable {
           String result = Url.fromurl(str, hex);
           System.out.println(result);
 
-        } else {
+         // Binary Encoding
+        } else if (method.equals("6")) {
+          System.out.print("Binary: ");
+          String str = input.nextLine();
+          String result = Binary.frombinary(str);
+          System.out.println(result);
+        }
+
+        else {
           System.out.println("Not exist");
           // exit with status code error
           System.exit(1);
@@ -219,7 +237,12 @@ public class Main implements Runnable {
             String result = Url.tourl(str, hex);
             System.out.println(result);
 
+            // Binary
+          } else if (convertTo.binary) {
+          String result = Binary.tobinary(str);
+          System.out.println(result);
           }
+
           // if decode
         } else if (enorde.decode) {
 
@@ -254,6 +277,11 @@ public class Main implements Runnable {
           } else if (convertTo.url) {
             String[] hex = Hex.gen_hex();
             String result = Url.fromurl(str, hex);
+            System.out.println(result);
+
+           // Binary
+          } else if (convertTo.binary) {
+            String result = Binary.frombinary(str);
             System.out.println(result);
           }
         }
